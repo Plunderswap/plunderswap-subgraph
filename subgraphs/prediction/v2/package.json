@@ -1,13 +1,13 @@
 {
   "name": "prediction-v2",
-  "description": "PancakeSwap Subgraph",
+  "description": "PlunderSwap Subgraph",
   "version": "1.0.0",
   "repository": "git@github.com:pancakeswap/pancake-subgraph.git",
-  "author": "PancakeSwap",
+  "author": "PlunderSwap",
   "license": "GPL-3.0-or-later",
   "scripts": {
     "codegen": "graph codegen subgraph.yaml",
     "build": "graph build subgraph.yaml",
-    "deploy": "graph deploy --product hosted-service --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ pancakeswap/prediction-v2 subgraph.yaml"
+    "deploy": "graph deploy --product hosted-service --node http://3.138.194.223:8020/ --ipfs http://3.138.194.223:5001 pancakeswap/prediction subgraph.yaml"
   }
 }

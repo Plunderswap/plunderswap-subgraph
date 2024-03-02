@@ -1,21 +1,16 @@
 specVersion: 0.0.2
-description: Pancake Prediction V2
-features:
-  - grafting
-graft:
-  base: QmaHRgUYDNKEXueDTA1Ntnv4rTWsignS9LojZFwyBr2mVm
-  block: 17140600
-repository: https://github.com/pancakeswap
+description: Plunderswap Prediction
+repository: https://github.com/plunderswap
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: PredictionV2
-    network: bsc
+    name: PancakePredictionV2
+    network: ZilliqaTestnet
     source:
-      address: '0x18B2A687610328590Bc8F2e5fEdDe3b582A49cdA'
-      abi: PredictionV2
-      startBlock: 10333825
+      address: '0x33cea2996575c03a320486bda7f901736c9ecba4'
+      abi: PancakePredictionV2
+      startBlock: 6271124
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -27,8 +22,8 @@ dataSources:
         - User
         - Bet
       abis:
-        - name: PredictionV2
-          file: ./abis/PredictionV2.json
+        - name: PancakePredictionV2
+          file: ./abis/PancakePredictionV2.json
       eventHandlers:
         - event: StartRound(indexed uint256)
           handler: handleStartRound

@@ -1,6 +1,6 @@
 /* eslint-disable prefer-const */
 import { Bundle, Pair, PancakeFactory, Token } from "../generated/schema";
-import { Pair as PairTemplate } from "../generated/templates";
+import { PlunderPair as PairTemplate } from "../generated/templates";
 import { PairCreated } from "../generated/Factory/Factory";
 import {
   FACTORY_ADDRESS,

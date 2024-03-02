@@ -1,10 +1,10 @@
 {
-  "name": "pancake-subgraph",
-  "description": "PancakeSwap Subgraph",
+  "name": "plunderswap-subgraph",
+  "description": "PlunderSwap Subgraph",
   "version": "2.0.0",
   "private": true,
-  "repository": "git@github.com:pancakeswap/pancake-subgraph.git",
-  "author": "PancakeSwap",
+  "repository": "git@github.com:plunderswap/plunderswap-subgraph.git",
+  "author": "PlunderSwap",
   "license": "GPL-3.0-or-later",
   "workspaces": [
     "subgraphs/**/*"

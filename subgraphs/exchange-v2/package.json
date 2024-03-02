@@ -10,9 +10,6 @@
     "auth": "graph auth --product hosted-service SUBGRAPH_ACCESS_TOKEN",
     "codegen": "graph codegen subgraph.yaml",
     "build": "graph build subgraph.yaml",
-    "deploy": "graph deploy --product hosted-service pancakeswap/exhange-eth",
-    "deploy:polygon-zkevm": "graph deploy --studio exchange-v2-polygon-zkevm",
-    "deploy:zksync-goerli": "graph deploy --studio graph deploy --studio exchange-v2-zksync-testnet",
-    "deploy:opbnb": "graph deploy --node https://open-platform-ap.nodereal.io/$API_KEY/opbnb-mainnet-graph-indexer/ --ipfs https://api.thegraph.com/ipfs/ pancakeswap/exchange-v2"
+    "deploy": "graph deploy --product hosted-service --node http://3.138.194.223:8020/ --ipfs http://3.138.194.223:5001 pancakeswap/exhange-v2"
   }
 }
