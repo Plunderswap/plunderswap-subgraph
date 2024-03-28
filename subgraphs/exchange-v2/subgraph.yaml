@@ -8,9 +8,9 @@ dataSources:
     name: PlunderFactory
     network: ZilliqaTestnet
     source:
-      address: "0xd0156efca4d847e4c4ad3f9eca7fa697bb105cc0"
+      address: "0xd0156efca4d847e4c4ad3f9eca7fa697bb105cc0" # maybe try uppercase/camel  0xd0156eFCA4D847E4c4aD3F9ECa7FA697bb105cC0
       abi: PlunderFactory
-      startBlock: 6691918
+      startBlock: 6144253
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4

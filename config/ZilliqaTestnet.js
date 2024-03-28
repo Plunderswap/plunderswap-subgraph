@@ -20,10 +20,10 @@ module.exports = {
     minETHLocked: 0,
   },
   v2: {
-    factoryAddress: "0xd0156efca4d847e4c4ad3f9eca7fa697bb105cc0",
+    factoryAddress: "0xd0156efca4d847e4c4ad3f9eca7fa697bb105cc0",  // maybe try uppercase/camel  0xd0156eFCA4D847E4c4aD3F9ECa7FA697bb105cC0
     wNativeStablePair0: "0x0000000000000000000000000000000000000000",
     wNativeStablePair1: "0x1fD09F6701a1852132A649fe9D07F2A3b991eCfA", // WZIL-USDC
-    startBlock: 6691918,
+    startBlock: 6144253,
     whitelistAddresses: [
       WETH,
       "0x1fD09F6701a1852132A649fe9D07F2A3b991eCfA", // USDC
