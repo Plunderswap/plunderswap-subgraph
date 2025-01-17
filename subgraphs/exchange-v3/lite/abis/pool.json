@@ -592,7 +592,7 @@
     "name": "lmPool",
     "outputs": [
       {
-        "internalType": "contract IPancakeV3LmPool",
+        "internalType": "contract IPlunderV3LmPool",
         "name": "",
         "type": "address"
       }
@@ -793,7 +793,7 @@
   {
     "inputs": [
       {
-        "internalType": "contract IPancakeV3LmPool",
+        "internalType": "contract IPlunderV3LmPool",
         "name": "_lmPool",
         "type": "address"
       }

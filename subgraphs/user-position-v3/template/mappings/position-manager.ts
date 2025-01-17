@@ -1,39 +1,68 @@
 /* eslint-disable prefer-const */
-import { Address } from "@graphprotocol/graph-ts";
+import { BigInt } from "@graphprotocol/graph-ts";
 import {
-  DecreaseLiquidity,
-  IncreaseLiquidity,
-  Transfer,
+  IncreaseLiquidity as IncreaseLiquidityEvent,
+  DecreaseLiquidity as DecreaseLiquidityEvent,
+  Transfer as TransferEvent
 } from "../generated/NonfungiblePositionManager/NonfungiblePositionManager";
-import { loadTransaction, updateUserPosition } from "../utils/schema";
-import { ADDRESS_ZERO, MASTERCHEF_ADDRESS } from "../utils/constants";
 import { UserPosition } from "../generated/schema";
+import { loadTransaction } from "../utils/schema";
+import { ZERO_BI } from "../utils/constants";
 
-export function handleIncreaseLiquidity(event: IncreaseLiquidity): void {
+export function handleIncreaseLiquidity(event: IncreaseLiquidityEvent): void {
   let transaction = loadTransaction(event);
+  
+  let tokenId = event.params.tokenId.toString();
+  let userPosition = UserPosition.load(tokenId);
+  
+  if (userPosition === null) {
+    userPosition = new UserPosition(tokenId);
+    userPosition.liquidity = ZERO_BI;
+    userPosition.owner = event.transaction.from;
+    userPosition.originOwner = event.transaction.from;
+    userPosition.createdAtBlockNumber = event.block.number;
+    userPosition.createdAtTimestamp = event.block.timestamp;
+    userPosition.pool = transaction.pool;
+    userPosition.tickLower = BigInt.fromI32(0); // Will be updated later
+    userPosition.tickUpper = BigInt.fromI32(0); // Will be updated later
+  }
+  
+  userPosition.liquidity = userPosition.liquidity.plus(event.params.liquidity);
+  userPosition.save();
+
   transaction.tokenId = event.params.tokenId;
+  transaction.increaseLiquidityAmount = event.params.liquidity;
   transaction.save();
-  updateUserPosition(event, transaction);
 }
 
-export function handleDecreaseLiquidity(event: DecreaseLiquidity): void {
+export function handleDecreaseLiquidity(event: DecreaseLiquidityEvent): void {
   let transaction = loadTransaction(event);
-  transaction.tokenId = event.params.tokenId;
-  transaction.save();
-  updateUserPosition(event, transaction);
-}
-
-export function handleTransfer(event: Transfer): void {
-  let transaction = loadTransaction(event);
-  if (event.params.from.equals(Address.fromString(ADDRESS_ZERO))) {
-    transaction.positionOwner = event.params.to;
-  } else {
-    let userPosition = UserPosition.load(event.params.tokenId.toString());
-    userPosition.owner = event.params.to;
-    if (!event.params.to.equals(Address.fromString(MASTERCHEF_ADDRESS))) {
-      userPosition.originOwner = event.params.to;
-    }
+  
+  let tokenId = event.params.tokenId.toString();
+  let userPosition = UserPosition.load(tokenId);
+  
+  if (userPosition !== null) {
+    userPosition.liquidity = userPosition.liquidity.minus(event.params.liquidity);
     userPosition.save();
   }
+
+  transaction.tokenId = event.params.tokenId;
+  transaction.decreaseLiquidityAmount = event.params.liquidity;
   transaction.save();
+}
+
+export function handleTransfer(event: TransferEvent): void {
+  let tokenId = event.params.tokenId.toString();
+  let userPosition = UserPosition.load(tokenId);
+  
+  if (userPosition !== null) {
+    userPosition.owner = event.params.to;
+    
+    // Check if the from address matches the current originOwner
+    if (event.params.from.equals(userPosition.originOwner)) {
+      userPosition.originOwner = event.params.to;
+    }
+    
+    userPosition.save();
+  }
 }

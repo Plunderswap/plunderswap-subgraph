@@ -9,11 +9,11 @@ export function loadTransaction(event: ethereum.Event): Transaction {
   }
   transaction.blockNumber = event.block.number;
   transaction.timestamp = event.block.timestamp;
-  transaction.gasUsed = event.transaction.gasUsed;
   transaction.gasPrice = event.transaction.gasPrice;
+  transaction.gasUsed = BigInt.fromI32(0);
   transaction.isPositionUpdated = false;
   transaction.save();
-  return transaction as Transaction;
+  return transaction;
 }
 
 export function updateUserPosition(event: ethereum.Event, tx: Transaction): void {
@@ -23,25 +23,30 @@ export function updateUserPosition(event: ethereum.Event, tx: Transaction): void
     tx.tickUpper !== null &&
     tx.tokenId !== null &&
     tx.positionOwner !== null &&
+    tx.pool !== null &&    
     (tx.increaseLiquidityAmount !== null || tx.decreaseLiquidityAmount !== null)
   ) {
-    let userPosition = UserPosition.load(tx.tokenId.toString());
+    let tokenId = tx.tokenId!.toString();
+    let userPosition = UserPosition.load(tokenId);
     if (userPosition === null) {
-      userPosition = new UserPosition(tx.tokenId.toString());
+      userPosition = new UserPosition(tokenId);
       userPosition.liquidity = ZERO_BI;
-      userPosition.pool = tx.pool;
       userPosition.createdAtBlockNumber = event.block.number;
       userPosition.createdAtTimestamp = event.block.timestamp;
     }
-    userPosition.tickLower = tx.tickLower as BigInt;
-    userPosition.tickUpper = tx.tickUpper as BigInt;
-    userPosition.owner = tx.positionOwner as Bytes;
-    userPosition.originOwner = tx.positionOwner as Bytes;
+
+    // Now we know userPosition is not null
+    userPosition.pool = tx.pool!;
+    userPosition.tickLower = tx.tickLower!;
+    userPosition.tickUpper = tx.tickUpper!;
+    userPosition.owner = tx.positionOwner!;
+    userPosition.originOwner = tx.positionOwner!;
+    
     if (tx.increaseLiquidityAmount !== null) {
-      userPosition.liquidity = userPosition.liquidity.plus(tx.increaseLiquidityAmount as BigInt);
+      userPosition.liquidity = userPosition.liquidity.plus(tx.increaseLiquidityAmount!);
     }
     if (tx.decreaseLiquidityAmount !== null) {
-      userPosition.liquidity = userPosition.liquidity.minus(tx.decreaseLiquidityAmount as BigInt);
+      userPosition.liquidity = userPosition.liquidity.minus(tx.decreaseLiquidityAmount!);
     }
 
     tx.isPositionUpdated = true;

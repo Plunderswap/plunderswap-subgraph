@@ -1,4 +1,4 @@
-specVersion: 0.0.2
+specVersion: 0.0.4
 description: PancakeSwap is a decentralized protocol for automated token exchange on Binance Smart Chain.
 repository: https://github.com/pancakeswap
 schema:
@@ -13,7 +13,7 @@ dataSources:
       startBlock: 169319653
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./mappings/factory.ts
       entities:
@@ -48,7 +48,7 @@ templates:
       abi: StableSwapPair
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./mappings/stableSwapPairV2.ts
       entities:
@@ -87,7 +87,7 @@ templates:
       abi: StableSwap3PairV2
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./mappings/stableSwapPairV3.ts
       entities:
@@ -126,7 +126,7 @@ templates:
       abi: ERC20
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./mappings/transfer.ts
       entities:

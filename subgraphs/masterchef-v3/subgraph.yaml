@@ -1,4 +1,4 @@
-specVersion: 0.0.3
+specVersion: 0.0.4
 description: MasterChefV3
 repository: https://github.com/pancakeswap/pancakeswapswap-subgraph
 schema:
@@ -13,7 +13,7 @@ dataSources:
       startBlock: 8792225
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/mappings/masterchefV3.ts
       entities:

@@ -394,8 +394,8 @@ export function handleSwap(event: SwapEvent): void {
 
   // update fee growth
   let poolContract = PoolABI.bind(event.address);
-  let feeGrowthGlobal0X128 = poolContract.feeGrowthGlobal0X128();
-  let feeGrowthGlobal1X128 = poolContract.feeGrowthGlobal1X128();
+  let feeGrowthGlobal0X128 = poolContract.try_feeGrowthGlobal0X128();
+  let feeGrowthGlobal1X128 = poolContract.try_feeGrowthGlobal1X128();
   pool.feeGrowthGlobal0X128 = feeGrowthGlobal0X128 as BigInt;
   pool.feeGrowthGlobal1X128 = feeGrowthGlobal1X128 as BigInt;
 
@@ -497,8 +497,8 @@ export function handleFlash(event: FlashEvent): void {
   // update fee growth
   let pool = Pool.load(event.address.toHexString());
   let poolContract = PoolABI.bind(event.address);
-  let feeGrowthGlobal0X128 = poolContract.feeGrowthGlobal0X128();
-  let feeGrowthGlobal1X128 = poolContract.feeGrowthGlobal1X128();
+  let feeGrowthGlobal0X128 = poolContract.try_feeGrowthGlobal0X128();
+  let feeGrowthGlobal1X128 = poolContract.try_feeGrowthGlobal1X128();
   pool.feeGrowthGlobal0X128 = feeGrowthGlobal0X128 as BigInt;
   pool.feeGrowthGlobal1X128 = feeGrowthGlobal1X128 as BigInt;
   pool.save();
@@ -508,12 +508,12 @@ function updateTickFeeVarsAndSave(tick: Tick, event: ethereum.Event): void {
   let poolAddress = event.address;
   // not all ticks are initialized so obtaining null is expected behavior
   let poolContract = PoolABI.bind(poolAddress);
-  let tickResult = poolContract.ticks(tick.tickIdx.toI32());
-  tick.feeGrowthOutside0X128 = tickResult.value2;
-  tick.feeGrowthOutside1X128 = tickResult.value3;
-  tick.save();
+  // let tickResult = poolContract.try_ticks(tick.tickIdx.toI32());
+  // tick.feeGrowthOutside0X128 = tickResult.value.value2;
+  // tick.feeGrowthOutside1X128 = tickResult.value.value3;
+  // tick.save();
 
-  updateTickDayData(tick!, event);
+  // updateTickDayData(tick!, event);
 }
 
 function loadTickUpdateFeeVarsAndSave(tickId: i32, event: ethereum.Event): void {

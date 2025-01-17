@@ -223,7 +223,7 @@
   {
     "inputs": [],
     "name": "lmPool",
-    "outputs": [{ "internalType": "contract IPancakeV3LmPool", "name": "", "type": "address" }],
+    "outputs": [{ "internalType": "contract IPlunderV3LmPool", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
   },

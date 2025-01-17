@@ -5,16 +5,16 @@ import { BigDecimal, BigInt } from "@graphprotocol/graph-ts";
 import { exponentToBigDecimal, safeDiv } from "./index";
 
 // prettier-ignore
-const WETH_ADDRESS = "0x82af49447d8a07e3bd95bd0d56f35241523fbab1";
+const WETH_ADDRESS = "0x878c5008A348A60a5B239844436A7b483fAdb7F2";
 // prettier-ignore
-const USDC_WETH_03_POOL = "0xd9e2a1a61b6e61b275cec326465d417e52c1b95c";
+const USDC_WETH_03_POOL = "0x4b5A8D15619ecba43844956EBfC4f3c83eE3eCDa";
 
 const STABLE_IS_TOKEN0 = "false" as string;
 
 // token where amounts should contribute to tracked volume and liquidity
 // usually tokens that many tokens are paired with s
 // prettier-ignore
-export let WHITELIST_TOKENS: string[] = "0x82af49447d8a07e3bd95bd0d56f35241523fbab1,0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9,0xaf88d065e77c8cc2239327c5edb3a432268e5831,0xff970a61a04b1ca14834a43f5de4533ebddb5cc8,0x912ce59144191c1204e64559fe8253a0e49e6548,0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f,0xda10009cbd5d07dd0cecc66161fc93d7c9000da1,0xe80772eaf6e2e18b651f160bc9158b2a5cafca65,0xb1084db8d3c05cebd5fa9335df95ee4b8a0edc30".split(",");
+export let WHITELIST_TOKENS: string[] = "0x28e8d39Fc68eaA27c88797Eb7D324b4B97D5b844,0x5900Ac075A67742f5eA4204650FEad9E674c664F,0x51b9F3DDB948Bcc16b89B48d83b920bc01Dbed55,0x8895Aa1bEaC254E559A3F91e579CF4a67B70ce02,0x95D5CC6e8A2f712E801d26F1D2438E379E480780".split(",");
 
 // prettier-ignore
 let STABLE_COINS: string[] = "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9,0xaf88d065e77c8cc2239327c5edb3a432268e5831,0xff970a61a04b1ca14834a43f5de4533ebddb5cc8,0xda10009cbd5d07dd0cecc66161fc93d7c9000da1".split(",");

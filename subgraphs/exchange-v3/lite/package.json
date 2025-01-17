@@ -10,6 +10,6 @@
     "auth": "graph auth --product hosted-service SUBGRAPH_KEY",
     "codegen": "graph codegen subgraph.yaml",
     "build": "graph build subgraph.yaml",
-    "deploy": "graph deploy --product hosted-service --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ chef-jojo/exchange-v3-lite subgraph.yaml"
+    "deploy": "graph deploy --product hosted-service --node http://18.224.94.199:8020/ --ipfs http://18.224.94.199:5001 plunderswap/exchange-v3-lite"
   }
 }

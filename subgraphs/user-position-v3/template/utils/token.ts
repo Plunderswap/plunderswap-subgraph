@@ -52,11 +52,11 @@ export function fetchTokenName(tokenAddress: Address): string {
 export function fetchTokenDecimals(tokenAddress: Address): BigInt {
   let contract = ERC20.bind(tokenAddress);
   // try types uint8 for decimals
-  let decimalValue = null;
+  let decimalValue = 18; // Default to 18 if call fails
   let decimalResult = contract.try_decimals();
   if (!decimalResult.reverted) {
     decimalValue = decimalResult.value;
   }
 
-  return BigInt.fromI32(decimalValue as i32);
+  return BigInt.fromI32(decimalValue);
 }

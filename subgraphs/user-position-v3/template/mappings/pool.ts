@@ -1,6 +1,6 @@
 /* eslint-disable prefer-const */
-import { BigInt } from "@graphprotocol/graph-ts";
-import { Burn as BurnEvent, Mint as MintEvent } from "../generated/templates/Pool/Pool";
+import { BigInt, log, ethereum, Bytes } from "@graphprotocol/graph-ts";
+import { Burn as BurnEvent, Mint as MintEvent, Multicall as MulticallEvent } from "../generated/templates/Pool/Pool";
 import { Burn, Mint, Pool, Token } from "../generated/schema";
 import { convertTokenToDecimal } from "../utils";
 import { loadTransaction, updateUserPosition } from "../utils/schema";
@@ -10,8 +10,15 @@ export function handleMint(event: MintEvent): void {
   let transaction = loadTransaction(event);
   let poolAddress = event.address.toHexString();
   let pool = Pool.load(poolAddress);
+  
+  // Return if pool doesn't exist
+  if (!pool) return;
+  
   let token0 = Token.load(pool.token0);
   let token1 = Token.load(pool.token1);
+  
+  // Return if tokens don't exist
+  if (!token0 || !token1) return;
 
   let amount0 = convertTokenToDecimal(event.params.amount0, token0.decimals);
   let amount1 = convertTokenToDecimal(event.params.amount1, token1.decimals);
@@ -40,7 +47,6 @@ export function handleMint(event: MintEvent): void {
   transaction.tickUpper = BigInt.fromI32(event.params.tickUpper);
   transaction.increaseLiquidityAmount = event.params.amount;
   transaction.pool = pool.id;
-
   transaction.save();
 
   updateUserPosition(event, transaction);
@@ -50,8 +56,15 @@ export function handleBurn(event: BurnEvent): void {
   let transaction = loadTransaction(event);
   let poolAddress = event.address.toHexString();
   let pool = Pool.load(poolAddress);
+  
+  // Return if pool doesn't exist
+  if (!pool) return;
+  
   let token0 = Token.load(pool.token0);
   let token1 = Token.load(pool.token1);
+  
+  // Return if tokens don't exist
+  if (!token0 || !token1) return;
 
   let amount0 = convertTokenToDecimal(event.params.amount0, token0.decimals);
   let amount1 = convertTokenToDecimal(event.params.amount1, token1.decimals);
@@ -79,8 +92,50 @@ export function handleBurn(event: BurnEvent): void {
   transaction.tickUpper = BigInt.fromI32(event.params.tickUpper);
   transaction.decreaseLiquidityAmount = event.params.amount;
   transaction.pool = pool.id;
-
   transaction.save();
 
   updateUserPosition(event, transaction);
+}
+
+function handleMintFromMulticall(event: MulticallEvent, pool: Pool, callData: Bytes): void {
+  log.debug('Processing mint from multicall', []);
+  // Here you would decode the calldata and process it similar to handleMint
+  // For now, we'll just log it
+}
+
+function handleBurnFromMulticall(event: MulticallEvent, pool: Pool, callData: Bytes): void {
+  log.debug('Processing burn from multicall', []);
+  // Here you would decode the calldata and process it similar to handleBurn
+  // For now, we'll just log it
+}
+
+export function handleMulticall(event: MulticallEvent): void {
+  let transaction = loadTransaction(event);
+  let poolAddress = event.address.toHexString();
+  let pool = Pool.load(poolAddress);
+  
+  if (!pool) return;
+
+  log.debug('Processing Multicall event. TxHash: {}, Block: {}', [
+    event.transaction.hash.toHexString(),
+    event.block.number.toString()
+  ]);
+
+  // Process each call in the multicall
+  let calls = event.params.data;
+  for (let i = 0; i < calls.length; i++) {
+    let callData = calls[i];
+    // The first 4 bytes of the call data is the function selector
+    let selector = callData.slice(0, 4);
+    
+    // Convert selector to hex string for comparison
+    let selectorHex = Bytes.fromUint8Array(selector).toHexString();
+    log.debug('Processing multicall selector: {}', [selectorHex]);
+
+    if (selectorHex == "88316456") { // mint
+      handleMintFromMulticall(event, pool, Bytes.fromUint8Array(callData.slice(4)));
+    } else if (selectorHex == "0c49ccbe") { // burn
+      handleBurnFromMulticall(event, pool, Bytes.fromUint8Array(callData.slice(4)));
+    }
+  }
 }

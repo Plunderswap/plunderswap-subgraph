@@ -118,3 +118,4 @@ build/
 generated/
 
 .turbo
+.specstory/**
