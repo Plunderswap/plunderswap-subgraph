@@ -1,9 +1,17 @@
-import { BigInt, Address } from "@graphprotocol/graph-ts"
+import { BigInt, Address, log } from "@graphprotocol/graph-ts"
 import {
   Transfer as TransferEvent,
   Token as TokenContract
 } from "./generated/Token/Token"
 import { Token, Account, Transfer } from "./generated/schema"
+
+function getBalance(address: Address, contract: TokenContract): BigInt {
+  let result = contract.try_balanceOf(address)
+  if (!result.reverted) {
+    return result.value
+  }
+  return BigInt.fromI32(0)
+}
 
 export function handleTransfer(event: TransferEvent): void {
   let token = Token.load("1")
@@ -11,7 +19,6 @@ export function handleTransfer(event: TransferEvent): void {
     token = new Token("1")
     let contract = TokenContract.bind(event.address)
     
-    // Safely load token data with null checks
     let tokenSymbol = contract.try_symbol()
     let tokenName = contract.try_name()
     let tokenDecimals = contract.try_decimals()
@@ -24,6 +31,7 @@ export function handleTransfer(event: TransferEvent): void {
     token.save()
   }
 
+  let contract = TokenContract.bind(event.address)
   let fromAddress = event.params.from.toHexString()
   let toAddress = event.params.to.toHexString()
   
@@ -50,9 +58,9 @@ export function handleTransfer(event: TransferEvent): void {
   transfer.timestamp = event.block.timestamp
   transfer.block = event.block.number
 
-  // Update balances
-  fromAccount.balance = fromAccount.balance.minus(event.params.value)
-  toAccount.balance = toAccount.balance.plus(event.params.value)
+  // Get actual balances from contract
+  fromAccount.balance = getBalance(event.params.from, contract)
+  toAccount.balance = getBalance(event.params.to, contract)
 
   // Save entities
   fromAccount.save()

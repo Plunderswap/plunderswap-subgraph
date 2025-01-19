@@ -6,9 +6,9 @@ dataSources:
     name: Token
     network: mainnet  # or your target network
     source:
-      address: "0x2aE05Bfc681D7872209A3Bf1A9513Bd4A48E66f0"
+      address: "0xE9df5b4b1134A3aadf693Db999786699B016239e"
       abi: Token
-      startBlock: 3592195
+      startBlock: 4105876
   # block where your token was deployed
     mapping:
       kind: ethereum/events

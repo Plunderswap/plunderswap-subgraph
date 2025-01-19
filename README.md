@@ -67,3 +67,7 @@ For any of the subgraph: `blocks` as `[subgraph]`
 6. Give it a version label.  This is the version that will be used when you deploy.  It is a string that will be used to identify the version of the subgraph.  It is recommended to use the format `v1.0.0` for the first version.
 
 7. Once deployed, you can access the subgraph at the URL provided by TheGraph.  This is the URL that will be used to query the subgraph.
+
+8. If you want to remove the subgraph, you can do so with `yarn remove2`.  This will remove the subgraph from the GraphQL endpoint.
+
+NOTE: If you want to make the subgraph re-fetch the data, change the start block in the subgraph.yaml file to a block that is before the current block, and start at step 1 again.  This will cause the subgraph to re-fetch the data from the start block.

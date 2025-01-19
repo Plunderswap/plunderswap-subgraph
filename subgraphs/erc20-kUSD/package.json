@@ -1,6 +1,6 @@
 {
-  "name": "erc20-pzil",
-  "description": "pZIL Subgraph",
+  "name": "erc20-kusd",
+  "description": "kUSD Subgraph",
   "version": "1.0.0",
   "repository": "git@github.com:Plunderswap/plunderswap-subgraph.git",
   "author": "Plunderswap/Abbika",
@@ -8,9 +8,9 @@
   "scripts": {
     "codegen": "graph codegen subgraph.yaml",
     "build": "graph build subgraph.yaml",
-    "deploy": "graph deploy --node http://138.201.20.24:8020/ --ipfs http://138.201.20.24:5001 erc20/pZIL",
-    "remove2": "graph remove --node http://138.201.20.24:8020/ erc20/pZIL",
-    "create2": "graph create --node http://138.201.20.24:8020/ erc20/pZIL"
+    "deploy": "graph deploy --node http://138.201.20.24:8020/ --ipfs http://138.201.20.24:5001 erc20/kUSD",
+    "create2": "graph create --node http://138.201.20.24:8020/ erc20/kUSD",
+    "remove2": "graph remove --node http://138.201.20.24:8020/ erc20/kUSD"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "^0.93.3"
