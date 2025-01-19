@@ -4,6 +4,8 @@ TheGraph exposes a GraphQL endpoint to query the events and entities within Zill
 
 Currently, there are multiple subgraphs, but additional subgraphs can be added to this repository, following the current architecture.
 
+For Plunderswap, our Graphnode is setup pointing to ZQ2 protomainnet, and is hosted on 138.201.20.24.  The graphnode is setup as per this guide <https://docs.moonbeam.network/node-operators/indexer-nodes/thegraph-node/> and uses docker for all portions of the setup.  Really simple setup.  Pointed to our own archive node on the same server on port 4204.
+
 ## Subgraph Demos
 
 ### erc20-pZIL
@@ -16,13 +18,15 @@ This demo (/subgraphs/erc20-pZIL) is a simple ERC20 token with a Transfer event.
 
 ### erc20-TACO
 
-This demo (/subgraphs/erc20-TACO) is a simple ERC20 token with a Transfer event.  It is an ERC20 that was created on the ZQ1 blockchain.  Can be access at <http://138.201.20.24:8000/subgraphs/name/erc20/TACO>
+This demo (/subgraphs/erc20-kUSD) is a simple ERC20 token with a Transfer event.  It is an ERC20 that was created on the ZQ1 blockchain.  Can be access at <http://138.201.20.24:8000/subgraphs/name/erc20/kUSD>
 
-- Token address: 0x2aE05Bfc681D7872209A3Bf1A9513Bd4A48E66f0
-- Start block: 3592195
-- Token Name: TACO
+- Token address: 0xE9df5b4b1134A3aadf693Db999786699B016239e
+- Start block: 4105876
+- Token Name: kUSD
 
-## Subgraphs - TO DO - Update to Zilliqa 2.0 or delete if we arent going to use them
+## Subgraphs
+
+TO DO - Update to Zilliqa 2.0 or delete if we arent going to use them
 
 1. **[Blocks](https://thegraph.com/legacy-explorer/subgraph/pancakeswap/blocks)**: Tracks all blocks on Binance Smart Chain.
 
@@ -40,6 +44,12 @@ This demo (/subgraphs/erc20-TACO) is a simple ERC20 token with a Transfer event.
 
 5. **Exchange (v3)**: Tracks all PancakeSwap V3 Exchange data with price, volume, liquidity
     - TO DO - Update to Zilliqa 2.0 - BSC https://thegraph.com/hosted-service/subgraph/pancakeswap/exchange-v3-bsc
+
+6. **user-positions-v3**: Tracks user positions for MasterChefV3.
+    - TO DO - Update to Zilliqa 2.0 - BSC https://thegraph.com/hosted-service/subgraph/pancakeswap/user-positions-v3-bsc
+
+7. **trading-competition**: Tracks trading competition data.
+    - TO DO - Update to Zilliqa 2.0 - BSC https://thegraph.com/hosted-service/subgraph/pancakeswap/trading-competition-v3-bsc
 
 ## Dependencies
 
